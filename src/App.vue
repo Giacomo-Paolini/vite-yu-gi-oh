@@ -10,12 +10,18 @@ export default {
         AppHeader,
         AppMain,
     },
+    data() {
+        return {
+            store
+        }
+    },
     mounted() {
         axios.get(this.store.urlAPI).then(r => {
-            this.store.cards.push(r.data.data);
+            this.store.cards = r.data.data;
             this.store.loading = false;
+            console.log(this.store.cards);
         }).catch(error => {
-            console.error("Something went wrong");
+            console.error("Something went wrong", error);
         })
     }
 }
