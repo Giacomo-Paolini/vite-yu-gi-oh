@@ -15,14 +15,34 @@ export default {
             store
         }
     },
+    methods: {
+        getCards() {
+            this.store.loading = true;
+
+            axios.get(this.store.urlAPI).then(r => {
+                this.store.cards = r.data.data;
+                this.store.loading = false;
+                // console.log(this.store.cards);
+            }).catch(error => {
+                console.error("Something went wrong", error);
+            })
+        },
+        getArchetypes() {
+            this.store.loading = true;
+
+            axios.get(this.store.swagAPI).then(r => {
+                this.store.archetypeArray = r.data;
+                this.store.loading = false;
+                // console.log(this.store.cards);
+                this.archetypeArray = this.store.archetypeArray;
+            }).catch(error => {
+                console.error("Something went wrong", error);
+            })
+        }
+    },
     mounted() {
-        axios.get(this.store.urlAPI).then(r => {
-            this.store.cards = r.data.data;
-            this.store.loading = false;
-            console.log(this.store.cards);
-        }).catch(error => {
-            console.error("Something went wrong", error);
-        })
+        this.getCards()
+        this.getArchetypes()
     }
 }
 </script>
